@@ -26,7 +26,7 @@ export function createFlagMarkup(countries) {
       return `
             
                      <li class = "country-list-item">
-                     <img class = "country-list-img" src="${flags.svg}" alt="Flag of ${name.official}" width = "20" height = "20">
+                     <img class = "country-list-img" src="${flags.svg}" alt="Flag of ${name.official}" width = "30" height = "30">
                      <p class = "country-list-text">${name.official}</p>
                       </li>
               

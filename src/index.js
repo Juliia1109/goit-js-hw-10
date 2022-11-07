@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { createCountriesMarkup, createFlagMarkup } from './js/markup';
-import { fetchCountries } from './fetchCountries';
+import API from './fetchCountries';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 
@@ -24,33 +24,52 @@ function handleInputSearch(event) {
     return;
   }
 
-  fetchCountries(searchQuery)
-    .then(countries => {
-      countryList.innerHTML = '';
-      countryInfo.innerHTML = '';
-      if (countries.length === 1) {
-        countryList.insertAdjacentHTML(
-          'beforeend',
-          createCountriesMarkup(countries)
-        );
-        countryInfo.insertAdjacentHTML(
-          'beforeend',
-          createFlagMarkup(countries)
-        );
-      } else if (countries.length >= 10) {
-        onManyMatches();
-      } else {
-        countryList.insertAdjacentHTML(
-          'beforeend',
-          createCountriesMarkup(countries)
-        );
-      }
-    })
-    .catch(onFetchError);
-  // API.fetchCountries(searchQuery)
-  //   .then(renderCountryCard)
-  //   .catch(onFetchError)
-  //   .finally(() => form.reset());
+  // fetchCountries(searchQuery)
+  //   .then(countries => {
+  //     countryList.innerHTML = '';
+  //     countryInfo.innerHTML = '';
+  //     if (countries.length === 1) {
+  //       countryList.insertAdjacentHTML(
+  //         'beforeend',
+  //         createCountriesMarkup(countries)
+  //       );
+  //       countryInfo.insertAdjacentHTML(
+  //         'beforeend',
+  //         createFlagMarkup(countries)
+  //       );
+  //     } else if (countries.length >= 10) {
+  //       onManyMatches();
+  //     } else {
+  //       countryList.insertAdjacentHTML(
+  //         'beforeend',
+  //         createCountriesMarkup(countries)
+  //       );
+  //     }
+  //   })
+  //   .catch(onFetchError);
+  API.fetchCountries(searchQuery)
+    .then(renderCountryCard)
+    .catch(onFetchError)
+    .finally(() => form.reset());
+}
+
+function renderCountryCard(countries) {
+  countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
+  if (countries.length === 1) {
+    countryList.insertAdjacentHTML(
+      'beforeend',
+      createCountriesMarkup(countries)
+    );
+    countryInfo.insertAdjacentHTML('beforeend', createFlagMarkup(countries));
+  } else if (countries.length >= 10) {
+    onManyMatches();
+  } else {
+    countryList.insertAdjacentHTML(
+      'beforeend',
+      createCountriesMarkup(countries)
+    );
+  }
 }
 
 // const cardsCountriesMarkup = createCountriesMarkup(countries);
