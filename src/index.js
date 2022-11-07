@@ -24,58 +24,24 @@ function handleInputSearch(event) {
     return;
   }
 
-  // fetchCountries(searchQuery)
-  //   .then(countries => {
-  //     countryList.innerHTML = '';
-  //     countryInfo.innerHTML = '';
-  //     if (countries.length === 1) {
-  //       countryList.insertAdjacentHTML(
-  //         'beforeend',
-  //         createCountriesMarkup(countries)
-  //       );
-  //       countryInfo.insertAdjacentHTML(
-  //         'beforeend',
-  //         createFlagMarkup(countries)
-  //       );
-  //     } else if (countries.length >= 10) {
-  //       onManyMatches();
-  //     } else {
-  //       countryList.insertAdjacentHTML(
-  //         'beforeend',
-  //         createCountriesMarkup(countries)
-  //       );
-  //     }
-  //   })
-  //   .catch(onFetchError);
-  API.fetchCountries(searchQuery)
-    .then(renderCountryCard)
-    .catch(onFetchError)
-    .finally(() => form.reset());
+  API.fetchCountries(searchQuery).then(renderCountryCard).catch(onFetchError);
 }
 
 function renderCountryCard(countries) {
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';
   if (countries.length === 1) {
-    countryList.insertAdjacentHTML(
+    countryList.insertAdjacentHTML('beforeend', createFlagMarkup(countries));
+    countryInfo.insertAdjacentHTML(
       'beforeend',
       createCountriesMarkup(countries)
     );
-    countryInfo.insertAdjacentHTML('beforeend', createFlagMarkup(countries));
   } else if (countries.length >= 10) {
     onManyMatches();
   } else {
-    countryList.insertAdjacentHTML(
-      'beforeend',
-      createCountriesMarkup(countries)
-    );
+    countryList.insertAdjacentHTML('beforeend', createFlagMarkup(countries));
   }
 }
-
-// const cardsCountriesMarkup = createCountriesMarkup(countries);
-// countryInfo.innerHTML = cardsCountriesMarkup;
-// const cardsMarkup = createFlagMarkup(countries);
-// countryList.innerHTML = cardsMarkup;
 
 function onFetchError() {
   Notiflix.Notify.warning(`Oops, there is no country with that name`);
