@@ -1,14 +1,9 @@
-// const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
-// const API_KEY = '95632b02f9162f375a368971925f5209';
+const BASE_URL = 'https://restcountries.com/v3.1/name/';
 
-// export const fetchWeatherByCityName = cityName => {
-//   return fetch(
-//     `${BASE_URL}?q=${cityName}&lang=ua&units=metric&appid=${API_KEY}`
-//   ).then(response => {
-//     if (!response.ok) {
-//       throw new Error(response.status);
-//     }
-
-//     return response.json();
-//   });
-// };
+export function fetchCountries(name) {
+  return fetch(
+    `${BASE_URL}${name}?fields=name,capital,population,flags,languages`
+  )
+    .then(response => response.json())
+    .catch(error => console.log(error));
+}
